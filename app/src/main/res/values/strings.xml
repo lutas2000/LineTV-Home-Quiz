@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">LineTvHomeQuiz</string>
+    <string name="api_error">網路連線異常 點擊重試</string>
+</resources>
