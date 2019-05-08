@@ -18,7 +18,6 @@ class DramaRepository(
     fun getList(): Single<List<DramaEntity>?> {
         return dramaService.getList()
             .doOnSuccess { list -> // request成功時儲存到database
-                Log.d("test", "saveAll")
                 list?.let {
                     dramaDao.deleteAll()
                     dramaDao.saveAll(it)

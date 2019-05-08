@@ -34,17 +34,4 @@ class ResponseConverterFactory(gson: Gson): Converter.Factory() {
             return response?.data!!
         }
     }
-//    override fun responseBodyConverter(
-//        type: Type,
-//        annotations: Array<Annotation>,
-//        retrofit: Retrofit
-//    ): Converter<ResponseBody, *>? {
-////        if (type is JSONObject) {
-////            Log.d("test", "is JSONObject")
-////            return Converter<ResponseBody, ResponseBody> { body ->
-//////                body.
-////            }
-////        }
-//        return super.responseBodyConverter(type, annotations, retrofit)
-//    }
 }
