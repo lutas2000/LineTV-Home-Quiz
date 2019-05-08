@@ -35,6 +35,13 @@ class DramaListViewModel(private val dramaRepository: DramaRepository): ViewMode
     }
 
     /**
+     * for testing
+     */
+    fun getDrama() {
+        dramaRepository.getDrama(4)
+    }
+
+    /**
      * handle lifecycle destroy
      */
     fun destroy() {

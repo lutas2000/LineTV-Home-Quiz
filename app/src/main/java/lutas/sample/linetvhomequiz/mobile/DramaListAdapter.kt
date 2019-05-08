@@ -16,7 +16,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class DramaListAdapter(
-    var list: List<DramaEntity>?
+    var list: List<DramaEntity>?,
+    val test: () -> Unit
 ): RecyclerView.Adapter<DramaListAdapter.DramaViewHolder>() {
 
     class DramaViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -45,6 +46,9 @@ class DramaListAdapter(
             tvViews.text = withSuffix(drama.totalViews)
             tvRating.text = String.format("%.1f", drama.rating)
             showImage(itemView.context, imgThumb, drama.thumb)
+            itemView.setOnClickListener {
+                test()
+            }
         }
     }
 

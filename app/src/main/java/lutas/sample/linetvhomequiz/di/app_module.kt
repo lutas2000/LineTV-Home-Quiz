@@ -1,8 +1,10 @@
 package lutas.sample.linetvhomequiz.di
 
+import com.google.gson.Gson
 import lutas.sample.linetvhomequiz.remote.DramaService
 import lutas.sample.linetvhomequiz.repository.DramaRepository
 import lutas.sample.linetvhomequiz.mobile.DramaListViewModel
+import lutas.sample.linetvhomequiz.remote.ResponseConverterFactory
 import okhttp3.OkHttpClient
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -16,23 +18,4 @@ val appModule = module {
     viewModel { DramaListViewModel(get()) }
 
     factory { DramaRepository(get(), get()) }
-    single { createOkHttpClient() }
-    single { createService<DramaService>(get()) }
-}
-
-fun createOkHttpClient(): OkHttpClient {
-    return OkHttpClient.Builder()
-        .connectTimeout(10L, TimeUnit.SECONDS)
-        .readTimeout(10L, TimeUnit.SECONDS)
-        .build()
-}
-
-inline fun <reified T> createService(okHttpClient: OkHttpClient): T {
-    val retrofit = Retrofit.Builder()
-        // TODO use config
-        .baseUrl("http://www.mocky.io/v2/")
-        .client(okHttpClient)
-        .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
-    return retrofit.create(T::class.java)
 }

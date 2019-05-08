@@ -10,8 +10,11 @@ import lutas.sample.linetvhomequiz.model.DramaEntity
 @Dao
 interface DramaDao {
 
-    @Query("select * from " + DramaEntity.TABLE_NAME)
+    @Query("SELECT * FROM " + DramaEntity.TABLE_NAME)
     fun getAll(): Single<List<DramaEntity>>
+
+    @Query("SELECT * FROM " + DramaEntity.TABLE_NAME + " WHERE dramaId=:dramaId")
+    fun getDrama(dramaId: Int): Single<DramaEntity>
 
     @Query("DELETE FROM " + DramaEntity.TABLE_NAME)
     fun deleteAll()

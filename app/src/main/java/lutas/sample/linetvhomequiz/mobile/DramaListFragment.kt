@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_drama_list.*
+import kotlinx.android.synthetic.main.item_drama.*
 import lutas.sample.linetvhomequiz.R
 import lutas.sample.linetvhomequiz.mobile.ext.observe
 import lutas.sample.linetvhomequiz.mobile.ext.observeVisible
@@ -36,7 +37,7 @@ class DramaListFragment: Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = DramaListAdapter(mViewModel.dramaList.value)
+        adapter = DramaListAdapter(mViewModel.dramaList.value) { mViewModel.getDrama() }
         recycler.adapter = adapter
         recycler.layoutManager = LinearLayoutManager(context)
     }

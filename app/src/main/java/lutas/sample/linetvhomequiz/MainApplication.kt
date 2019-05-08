@@ -3,6 +3,7 @@ package lutas.sample.linetvhomequiz
 import android.app.Application
 import lutas.sample.linetvhomequiz.di.appModule
 import lutas.sample.linetvhomequiz.di.databaseModule
+import lutas.sample.linetvhomequiz.di.remoteModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -13,7 +14,7 @@ class MainApplication: Application() {
 
         startKoin {
             androidContext(this@MainApplication)
-            modules(databaseModule + appModule)
+            modules(remoteModule + databaseModule + appModule)
         }
     }
 }
