@@ -16,6 +16,10 @@ class DramaListViewModel(private val dramaRepository: DramaRepository): ViewMode
 
     private val disposables = CompositeDisposable()
 
+    init {
+        isLoading.value = false
+    }
+
     fun refresh() {
         isLoading.value = true
         val disposable = dramaRepository.getList()
@@ -32,13 +36,6 @@ class DramaListViewModel(private val dramaRepository: DramaRepository): ViewMode
                 }
             )
         disposables.add(disposable)
-    }
-
-    /**
-     * for testing
-     */
-    fun getDrama() {
-        dramaRepository.getDrama(4)
     }
 
     /**

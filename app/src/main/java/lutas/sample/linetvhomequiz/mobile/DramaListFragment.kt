@@ -37,7 +37,7 @@ class DramaListFragment: Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = DramaListAdapter(mViewModel.dramaList.value) { mViewModel.getDrama() }
+        adapter = DramaListAdapter(mViewModel.dramaList.value)
         recycler.adapter = adapter
         recycler.layoutManager = LinearLayoutManager(context)
     }

@@ -2,23 +2,20 @@ package lutas.sample.linetvhomequiz.mobile
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.text.format.DateUtils
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import lutas.sample.linetvhomequiz.model.DramaEntity
 import android.view.LayoutInflater
 import android.widget.TextView
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import lutas.sample.linetvhomequiz.R
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
 
 class DramaListAdapter(
-    var list: List<DramaEntity>?,
-    val test: () -> Unit
+    var list: List<DramaEntity>?
 ): RecyclerView.Adapter<DramaListAdapter.DramaViewHolder>() {
 
     class DramaViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -46,7 +43,10 @@ class DramaListAdapter(
             tvRating.text = String.format("%.1f", drama.rating)
             showImage(itemView.context, imgThumb, drama.thumb)
             itemView.setOnClickListener {
-                test()
+                val controller = Navigation.findNavController(it)
+                val action = DramaListFragmentDirections.toDramaFragment()
+                action.drama = drama
+                controller.navigate(action)
             }
         }
     }
