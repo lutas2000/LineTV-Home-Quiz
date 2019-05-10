@@ -8,8 +8,11 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import lutas.sample.linetvhomequiz.model.DramaEntity
 import lutas.sample.linetvhomequiz.repository.DramaRepository
+import java.lang.IllegalArgumentException
 
-class DramaListViewModel(private val dramaRepository: DramaRepository): ViewModel() {
+class DramaViewModel(
+    private val dramaRepository: DramaRepository
+): ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean>
@@ -17,37 +20,40 @@ class DramaListViewModel(private val dramaRepository: DramaRepository): ViewMode
     private val _error = MutableLiveData<Throwable>()
     val error: LiveData<Throwable>
         get() = _error
-    private val _dramaList = MutableLiveData<List<DramaEntity>>()
-    val dramaList: LiveData<List<DramaEntity>>
-        get() = _dramaList
+    private val _drama = MutableLiveData<DramaEntity>()
+    val drama: LiveData<DramaEntity>
+        get() = _drama
 
     private val disposables = CompositeDisposable()
 
-    init {
-        _isLoading.value = false
-    }
+    fun refresh(dramaId: Int?, data: DramaEntity?) {
+        if (data != null) {
+            _drama.value = data
+            return
+        }
+        if (dramaId == null || dramaId < 0) {
+            _error.value = IllegalArgumentException()
+            return
+        }
 
-    fun refresh() {
         _isLoading.value = true
-        val disposable = dramaRepository.getList()
+        val disposable = dramaRepository.getDrama(dramaId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe (
-                { list ->
+                { obj ->
                     _isLoading.value = false
-                    _dramaList.value = list
+                    _drama.value = obj
                 },
                 { e ->
                     _isLoading.value = false
                     _error.value = e
+                    e.printStackTrace()
                 }
             )
         disposables.add(disposable)
     }
 
-    /**
-     * handle lifecycle destroy
-     */
     fun destroy() {
         disposables.dispose()
     }
