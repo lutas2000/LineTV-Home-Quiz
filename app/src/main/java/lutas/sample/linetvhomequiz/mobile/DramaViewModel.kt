@@ -38,8 +38,8 @@ class DramaViewModel(
 
         _isLoading.value = true
         val disposable = dramaRepository.getDrama(dramaId)
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe (
                 { obj ->
                     _isLoading.value = false

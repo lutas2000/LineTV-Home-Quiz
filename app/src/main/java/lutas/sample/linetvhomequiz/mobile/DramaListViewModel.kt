@@ -30,8 +30,8 @@ class DramaListViewModel(private val dramaRepository: DramaRepository): ViewMode
     fun refresh() {
         _isLoading.value = true
         val disposable = dramaRepository.getList()
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe (
                 { list ->
                     _isLoading.value = false
