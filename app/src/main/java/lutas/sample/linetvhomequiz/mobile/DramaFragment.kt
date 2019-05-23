@@ -30,9 +30,10 @@ class DramaFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val args = arguments?.let { DramaFragmentArgs.fromBundle(it) }
-        mViewModel.refresh(args?.dramaId, args?.drama)
+        if (savedInstanceState == null) {
+            val args = arguments?.let { DramaFragmentArgs.fromBundle(it) }
+            mViewModel.refresh(args?.dramaId, args?.drama)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

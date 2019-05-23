@@ -1,6 +1,7 @@
 package lutas.sample.linetvhomequiz.di
 
 import com.google.gson.Gson
+import lutas.sample.linetvhomequiz.Config
 import lutas.sample.linetvhomequiz.remote.DramaService
 import lutas.sample.linetvhomequiz.remote.ResponseConverterFactory
 import okhttp3.OkHttpClient
@@ -10,25 +11,28 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.util.concurrent.TimeUnit
 
 val remoteModule = module {
-    single { createOkHttpClient() }
-    single { createWrappedService<DramaService>(get()) }
+    single { createRetrofit() }
+    factory { createService<DramaService>(get()) }
 }
 
-fun createOkHttpClient(): OkHttpClient {
-    return OkHttpClient.Builder()
-        .connectTimeout(10L, TimeUnit.SECONDS)
-        .readTimeout(10L, TimeUnit.SECONDS)
-        .build()
+private inline fun <reified T> createService(retrofit: Retrofit): T {
+    return retrofit.create(T::class.java)
 }
 
-inline fun <reified T> createWrappedService(okHttpClient: OkHttpClient): T {
+private fun createRetrofit(): Retrofit {
     val gson = Gson()
-    val retrofit = Retrofit.Builder()
-        // TODO use config
-        .baseUrl("http://www.mocky.io/v2/")
+    val okHttpClient = createOkHttpClient()
+    return Retrofit.Builder()
+        .baseUrl(Config.BASE_URL)
         .client(okHttpClient)
         .addConverterFactory(ResponseConverterFactory(gson))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
-    return retrofit.create(T::class.java)
+}
+
+private fun createOkHttpClient(): OkHttpClient {
+    return OkHttpClient.Builder()
+        .connectTimeout(10L, TimeUnit.SECONDS)
+        .readTimeout(10L, TimeUnit.SECONDS)
+        .build()
 }

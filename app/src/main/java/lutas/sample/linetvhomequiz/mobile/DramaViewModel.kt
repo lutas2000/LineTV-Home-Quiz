@@ -55,6 +55,6 @@ class DramaViewModel(
     }
 
     fun destroy() {
-        disposables.dispose()
+        disposables.clear()
     }
 }

@@ -3,6 +3,7 @@ package lutas.sample.linetvhomequiz.mobile
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -34,12 +35,12 @@ class DramaListViewModel(private val dramaRepository: DramaRepository): ViewMode
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe (
                 { list ->
-                    _isLoading.value = false
                     _dramaList.value = list
+                    _isLoading.value = false
                 },
                 { e ->
-                    _isLoading.value = false
                     _error.value = e
+                    _isLoading.value = false
                 }
             )
         disposables.add(disposable)
@@ -49,6 +50,6 @@ class DramaListViewModel(private val dramaRepository: DramaRepository): ViewMode
      * handle lifecycle destroy
      */
     fun destroy() {
-        disposables.dispose()
+        disposables.clear()
     }
 }

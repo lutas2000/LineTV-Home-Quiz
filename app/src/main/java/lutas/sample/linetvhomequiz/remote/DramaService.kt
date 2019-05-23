@@ -1,5 +1,6 @@
 package lutas.sample.linetvhomequiz.remote
 
+import io.reactivex.Observable
 import io.reactivex.Single
 import lutas.sample.linetvhomequiz.model.BaseResponse
 import lutas.sample.linetvhomequiz.model.DramaEntity
